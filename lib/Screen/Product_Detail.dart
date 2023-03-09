@@ -13,7 +13,6 @@ import 'package:entermarket_user/Screen/Cart.dart';
 import 'package:entermarket_user/Screen/CompareList.dart';
 import 'package:entermarket_user/Screen/ProductList.dart';
 import 'package:entermarket_user/Screen/ReviewList.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +91,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
   late AnimationController _progressAnimcontroller;
 
   var isDarkTheme;
-  late ShortDynamicLink shortenedLink;
+ // late ShortDynamicLink shortenedLink;
   String? shareLink;
   late String curPin;
   late double growStepWidth, beginWidth, endWidth = 0.0;
@@ -133,7 +132,7 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
         }
       }
 
-    getShare();
+    //getShare();
 
     _oldSelVarient = widget.model!.selVarient;
 
@@ -204,28 +203,28 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  Future<void> createDynamicLink() async {
-    try {
-      var documentDirectory;
-
-      if (Platform.isIOS)
-        documentDirectory = (await getApplicationDocumentsDirectory()).path;
-      else
-        documentDirectory = (await getExternalStorageDirectory())!.path;
-
-      final response1 = await get(Uri.parse(widget.model!.image!));
-      final bytes1 = response1.bodyBytes;
-
-      final File imageFile =
-          File('$documentDirectory/${widget.model!.name}.png');
-      imageFile.writeAsBytesSync(bytes1);
-      Share.shareFiles(['$documentDirectory/${widget.model!.name}.png'],
-          text:
-              "${widget.model!.name}\n${shortenedLink.shortUrl.toString()}\n$shareLink");
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> createDynamicLink() async {
+  //   try {
+  //     var documentDirectory;
+  //
+  //     if (Platform.isIOS)
+  //       documentDirectory = (await getApplicationDocumentsDirectory()).path;
+  //     else
+  //       documentDirectory = (await getExternalStorageDirectory())!.path;
+  //
+  //     final response1 = await get(Uri.parse(widget.model!.image!));
+  //     final bytes1 = response1.bodyBytes;
+  //
+  //     final File imageFile =
+  //         File('$documentDirectory/${widget.model!.name}.png');
+  //     imageFile.writeAsBytesSync(bytes1);
+  //     Share.shareFiles(['$documentDirectory/${widget.model!.name}.png'],
+  //         text:
+  //             "${widget.model!.name}\n${shortenedLink.shortUrl.toString()}\n$shareLink");
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   Future<Null> _playAnimation() async {
     try {
@@ -2773,35 +2772,35 @@ class StateItem extends State<ProductDetail> with TickerProviderStateMixin {
         : Container();
   }
 
-  Future<void> getShare() async {
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: deepLinkUrlPrefix,
-      link: Uri.parse(
-          'https://$deepLinkName/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${widget.model!.id}'),
-      androidParameters: AndroidParameters(
-        packageName: packageName,
-        minimumVersion: 1,
-      ),
-      iosParameters: IosParameters(
-        bundleId: iosPackage,
-        minimumVersion: '1',
-        appStoreId: appStoreId,
-      ),
-    );
-
-    final Uri longDynamicUrl = await parameters.buildUrl();
-
-    shortenedLink = await DynamicLinkParameters.shortenUrl(
-      longDynamicUrl,
-      new DynamicLinkParametersOptions(
-          shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
-    );
-
-    new Future.delayed(Duration.zero, () {
-      shareLink =
-          "\n$appName\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n${getTranslated(context, 'IOSLBL')}\n$iosLink";
-    });
-  }
+  // Future<void> getShare() async {
+  //   final DynamicLinkParameters parameters = DynamicLinkParameters(
+  //     uriPrefix: deepLinkUrlPrefix,
+  //     link: Uri.parse(
+  //         'https://$deepLinkName/?index=${widget.index}&secPos=${widget.secPos}&list=${widget.list}&id=${widget.model!.id}'),
+  //     androidParameters: AndroidParameters(
+  //       packageName: packageName,
+  //       minimumVersion: 1,
+  //     ),
+  //     iosParameters: IosParameters(
+  //       bundleId: iosPackage,
+  //       minimumVersion: '1',
+  //       appStoreId: appStoreId,
+  //     ),
+  //   );
+  //
+  //   final Uri longDynamicUrl = await parameters.buildUrl();
+  //
+  //   shortenedLink = await DynamicLinkParameters.shortenUrl(
+  //     longDynamicUrl,
+  //     new DynamicLinkParametersOptions(
+  //         shortDynamicLinkPathLength: ShortDynamicLinkPathLength.unguessable),
+  //   );
+  //
+  //   new Future.delayed(Duration.zero, () {
+  //     shareLink =
+  //         "\n$appName\n${getTranslated(context, 'APPFIND')}$androidLink$packageName\n${getTranslated(context, 'IOSLBL')}\n$iosLink";
+  //   });
+  // }
 
   _warrenty() {
     String? warranty = widget.model!.warranty;

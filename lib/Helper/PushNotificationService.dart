@@ -47,63 +47,65 @@ class PushNotificationService {
 
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('ic_launcher');
-    final IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings();
-    final MacOSInitializationSettings initializationSettingsMacOS =
-        MacOSInitializationSettings();
+    // final IOSInitializationSettings initializationSettingsIOS =
+    //     IOSInitializationSettings();
+    // final MacOSInitializationSettings initializationSettingsMacOS =
+    //     MacOSInitializationSettings();
     final InitializationSettings initializationSettings =
         InitializationSettings(
             android: initializationSettingsAndroid,
-            iOS: initializationSettingsIOS,
-            macOS: initializationSettingsMacOS);
+            // iOS: initializationSettingsIOS,
+            // macOS: initializationSettingsMacOS
+        );
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String? payload) async {
-      if (payload != null) {
-        List<String> pay = payload.split(",");
-        if (pay[0] == "products") {
-          getProduct(pay[1], 0, 0, true);
-        } else if (pay[0] == "categories") {
-          Future.delayed(Duration.zero, () {
-            tabController.animateTo(1);
-          });
-        } else if (pay[0] == "wallet") {
-          Navigator.push(
-              context, (MaterialPageRoute(builder: (context) => MyWallet())));
-        } else if (pay[0] == 'order') {
-          Navigator.push(
-              context, (MaterialPageRoute(builder: (context) => MyOrder())));
-        } else if (pay[0] == "ticket_message") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => Chat(
-                      id: pay[1],
-                      status: "",
-                    )),
-          );
-        } else if (pay[0] == "ticket_status") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CustomerSupport(),
-            ),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Splash()),
-          );
-        }
-      } else {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => MyApp(sharedPreferences: prefs)),
-        );
-      }
-    });
+    //     onSelectNotification: (String? payload) async {
+    //   if (payload != null) {
+    //     List<String> pay = payload.split(",");
+    //     if (pay[0] == "products") {
+    //       getProduct(pay[1], 0, 0, true);
+    //     } else if (pay[0] == "categories") {
+    //       Future.delayed(Duration.zero, () {
+    //         tabController.animateTo(1);
+    //       });
+    //     } else if (pay[0] == "wallet") {
+    //       Navigator.push(
+    //           context, (MaterialPageRoute(builder: (context) => MyWallet())));
+    //     } else if (pay[0] == 'order') {
+    //       Navigator.push(
+    //           context, (MaterialPageRoute(builder: (context) => MyOrder())));
+    //     } else if (pay[0] == "ticket_message") {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //             builder: (context) => Chat(
+    //                   id: pay[1],
+    //                   status: "",
+    //                 )),
+    //       );
+    //     } else if (pay[0] == "ticket_status") {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => CustomerSupport(),
+    //         ),
+    //       );
+    //     } else {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(builder: (context) => Splash()),
+    //       );
+    //     }
+    //   } else {
+    //     SharedPreferences prefs = await SharedPreferences.getInstance();
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => MyApp(sharedPreferences: prefs)),
+    //     );
+    //   }
+    // }
+    );
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       SettingProvider settingsProvider =
@@ -350,10 +352,10 @@ Future<void> generateSimpleNotication(
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker');
-  var iosDetail = IOSNotificationDetails();
+ // var iosDetail = IOSNotificationDetails();
 
   var platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics, iOS: iosDetail);
+      android: androidPlatformChannelSpecifics, );
   await flutterLocalNotificationsPlugin
       .show(0, title, msg, platformChannelSpecifics, payload: type + "," + id);
 }

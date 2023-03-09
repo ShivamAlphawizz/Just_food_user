@@ -2811,8 +2811,8 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
       paystackPayment(context);
     else if (payMethod == getTranslated(context, 'FLUTTERWAVE_LBL'))
       flutterwavePayment();
-    else if (payMethod == getTranslated(context, 'STRIPE_LBL'))
-      stripePayment();
+    // else if (payMethod == getTranslated(context, 'STRIPE_LBL'))
+    //   stripePayment();
     else if (payMethod == getTranslated(context, 'PAYTM_LBL'))
       paytmPayment();
     /*  else if (payMethod ==
@@ -3306,29 +3306,29 @@ class StateCart extends State<Cart> with TickerProviderStateMixin {
     return 'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
   }
 
-  stripePayment() async {
-    context.read<CartProvider>().setProgress(true);
-
-    var response = await StripeService.payWithNewCard(
-        amount: (totalPrice.toInt() * 100).toString(),
-        currency: stripeCurCode,
-        from: "order",
-        context: context);
-
-    if (response.message == "Transaction successful") {
-      placeOrder(response.status);
-    } else if (response.status == 'pending' || response.status == "captured") {
-      placeOrder(response.status);
-    } else {
-      if (mounted)
-        setState(() {
-          _placeOrder = true;
-        });
-
-      context.read<CartProvider>().setProgress(false);
-    }
-    setSnackbar(response.message!, _checkscaffoldKey);
-  }
+  // stripePayment() async {
+  //   context.read<CartProvider>().setProgress(true);
+  //
+  //   var response = await StripeService.payWithNewCard(
+  //       amount: (totalPrice.toInt() * 100).toString(),
+  //       currency: stripeCurCode,
+  //       from: "order",
+  //       context: context);
+  //
+  //   if (response.message == "Transaction successful") {
+  //     placeOrder(response.status);
+  //   } else if (response.status == 'pending' || response.status == "captured") {
+  //     placeOrder(response.status);
+  //   } else {
+  //     if (mounted)
+  //       setState(() {
+  //         _placeOrder = true;
+  //       });
+  //
+  //     context.read<CartProvider>().setProgress(false);
+  //   }
+  //   setSnackbar(response.message!, _checkscaffoldKey);
+  // }
 
   address() {
     return Card(

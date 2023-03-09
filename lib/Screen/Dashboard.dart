@@ -13,7 +13,7 @@ import 'package:entermarket_user/Screen/Favorite.dart';
 import 'package:entermarket_user/Screen/Login.dart';
 import 'package:entermarket_user/Screen/MyProfile.dart';
 import 'package:entermarket_user/Screen/Product_Detail.dart';
-import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -47,7 +47,7 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
       statusBarIconBrightness: Brightness.light,
     ));
     super.initState();
-    initDynamicLinks();
+   // initDynamicLinks();
     _tabController = TabController(
       length: 5,
       vsync: this,
@@ -84,45 +84,45 @@ class _HomePageState extends State<Dashboard> with TickerProviderStateMixin {
     );
   }
 
-  void initDynamicLinks() async {
-    FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
-      final Uri? deepLink = dynamicLink?.link;
-
-      if (deepLink != null) {
-        if (deepLink.queryParameters.length > 0) {
-          int index = int.parse(deepLink.queryParameters['index']!);
-
-          int secPos = int.parse(deepLink.queryParameters['secPos']!);
-
-          String? id = deepLink.queryParameters['id'];
-
-          String? list = deepLink.queryParameters['list'];
-
-          getProduct(id!, index, secPos, list == "true" ? true : false);
-        }
-      }
-    }, onError: (OnLinkErrorException e) async {
-      print(e.message);
-    });
-
-    final PendingDynamicLinkData? data =
-        await FirebaseDynamicLinks.instance.getInitialLink();
-    final Uri? deepLink = data?.link;
-    if (deepLink != null) {
-      if (deepLink.queryParameters.length > 0) {
-        int index = int.parse(deepLink.queryParameters['index']!);
-
-        int secPos = int.parse(deepLink.queryParameters['secPos']!);
-
-        String? id = deepLink.queryParameters['id'];
-
-        // String list = deepLink.queryParameters['list'];
-
-        getProduct(id!, index, secPos, true);
-      }
-    }
-  }
+  // void initDynamicLinks() async {
+  //   FirebaseDynamicLinks.instance.onLink(
+  //       onSuccess: (PendingDynamicLinkData? dynamicLink) async {
+  //     final Uri? deepLink = dynamicLink?.link;
+  //
+  //     if (deepLink != null) {
+  //       if (deepLink.queryParameters.length > 0) {
+  //         int index = int.parse(deepLink.queryParameters['index']!);
+  //
+  //         int secPos = int.parse(deepLink.queryParameters['secPos']!);
+  //
+  //         String? id = deepLink.queryParameters['id'];
+  //
+  //         String? list = deepLink.queryParameters['list'];
+  //
+  //         getProduct(id!, index, secPos, list == "true" ? true : false);
+  //       }
+  //     }
+  //   }, onError: (OnLinkErrorException e) async {
+  //     print(e.message);
+  //   });
+  //
+  //   final PendingDynamicLinkData? data =
+  //       await FirebaseDynamicLinks.instance.getInitialLink();
+  //   final Uri? deepLink = data?.link;
+  //   if (deepLink != null) {
+  //     if (deepLink.queryParameters.length > 0) {
+  //       int index = int.parse(deepLink.queryParameters['index']!);
+  //
+  //       int secPos = int.parse(deepLink.queryParameters['secPos']!);
+  //
+  //       String? id = deepLink.queryParameters['id'];
+  //
+  //       // String list = deepLink.queryParameters['list'];
+  //
+  //       getProduct(id!, index, secPos, true);
+  //     }
+  //   }
+  // }
 
   Future<void> getProduct(String id, int index, int secPos, bool list) async {
     _isNetworkAvail = await isNetworkAvailable();

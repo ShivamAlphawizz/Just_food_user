@@ -609,7 +609,7 @@ class StatePayment extends State<Payment> with TickerProviderStateMixin {
               stripeCurCode = payment['stripe_currency_code'];
               stripeMode = payment['stripe_mode'] ?? 'test';
               StripeService.secret = stripeSecret;
-              StripeService.init(stripeId, stripeMode);
+             // StripeService.init(stripeId, stripeMode);
             }
             if (paytm) {
               paytmMerId = payment['paytm_merchant_id'];
